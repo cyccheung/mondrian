@@ -1,5 +1,4 @@
-#define CANVASWIDTH 800
-#define CANVASHEIGHT 800
+#include "Image.hpp"
 
 int main() {
     return 0;
