@@ -11,7 +11,6 @@ Image::Image() {
             image.push_back(255);     // A
         }
     }
-    // std::cout << "Image Num Elements: " << image.size() << std::endl;
 }
 
 void Image::generateBMP(const char *fileName) {
@@ -75,10 +74,10 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
 
     // Draw black outline, 2 pixels thick, of this region. Do not draw if called on entire canvas
     if(!first) {
-        colorRegion(bottomLeftX, topRightY - 1, topRightX, topRightY, BLACK);       // Top line
-        colorRegion(topRightX - 1, bottomLeftY, topRightX, topRightY, BLACK);       // Right line
-        colorRegion(bottomLeftX, bottomLeftY, topRightX, bottomLeftY + 1, BLACK);   // Bottom line
-        colorRegion(bottomLeftX, bottomLeftY, bottomLeftX + 1, topRightY, BLACK);   // Left line
+        colorRegion(bottomLeftX, topRightY - (int)ceil(LINEWIDTH / 2), topRightX, topRightY, BLACK);       // Top line
+        colorRegion(topRightX - (int)ceil(LINEWIDTH / 2), bottomLeftY, topRightX, topRightY, BLACK);       // Right line
+        colorRegion(bottomLeftX, bottomLeftY, topRightX, bottomLeftY + (int)ceil(LINEWIDTH / 2), BLACK);   // Bottom line
+        colorRegion(bottomLeftX, bottomLeftY, bottomLeftX + (int)ceil(LINEWIDTH / 2), topRightY, BLACK);   // Left line
     }
 
     // Decide if split or color
@@ -100,13 +99,9 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
     // Do the splitting or coloring
     if(split) {
         // Generate random point near the middle of the region (25% to 75% of sides)
-        // randomInt = (rand() % 50) + 25;
         randomInt = rand() % (int)floor((topRightX - bottomLeftX) / 2);
-        // splitX = bottomLeftX + floor((randomInt * (topRightX - bottomLeftX)) / 100);
         splitX = bottomLeftX + randomInt + (int)(0.25 * (topRightX - bottomLeftX));
-        // randomInt = (rand() % 50) + 25;
         randomInt = rand() % (int)floor((topRightY - bottomLeftY) / 2);
-        // splitY = bottomLeftY + floor((randomInt * (topRightY - bottomLeftY)) / 100);
         splitY = bottomLeftY + randomInt + (int)(0.25 * (topRightY - bottomLeftY));
 
         // Recursively call function on each of the four regions
@@ -119,11 +114,11 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
         Color chosenColor;
         randomInt = rand() % 100;
         // Chances of each color
-        chosenColor = (randomInt >= 0 && randomInt < 20) ? RED :
-                      (randomInt >= 20 && randomInt < 40) ? YELLOW :
-                      (randomInt >= 40 && randomInt < 60) ? BLUE :
-                      WHITE;
-        colorRegion(bottomLeftX + 2, bottomLeftY + 2, topRightX - 2, topRightY - 2, chosenColor);
+        chosenColor = (randomInt >= 0 && randomInt < REDCHANCE)                                                     ? RED :
+                      (randomInt >= REDCHANCE && randomInt < REDCHANCE + YELLOWCHANCE)                              ? YELLOW :
+                      (randomInt >= REDCHANCE + YELLOWCHANCE && randomInt < REDCHANCE + YELLOWCHANCE + BLUECHANCE)  ? BLUE :
+                                                                                                                    WHITE;
+        colorRegion(bottomLeftX + (int)ceil(LINEWIDTH / 2), bottomLeftY + (int)ceil(LINEWIDTH / 2), topRightX - (int)ceil(LINEWIDTH / 2), topRightY - (int)ceil(LINEWIDTH / 2), chosenColor);
     }
 }
 

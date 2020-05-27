@@ -5,12 +5,14 @@
 
 #define CANVASWIDTH 400
 #define CANVASHEIGHT 400
-#define UPPERTHRESHOLD 200
-#define LOWERTHRESHOLD 30
-#define BYTESPERPIXEL 3
-#define LINEWIDTH 3     // Must be odd
-#define NUMCHANNELS 4
-#define RANDOMSEED 3
+#define UPPERTHRESHOLD 200      // If region's longest edge is longer than this, always split region
+#define LOWERTHRESHOLD 30       // If region's shortest edge is shorter than this, always color region
+#define LINEWIDTH 5             // Must be odd
+#define NUMCHANNELS 4           // Blue, Green, Red, Alpha
+#define RANDOMSEED 6            // Change to get different image
+#define BLUECHANCE 20           // Percentage chances of colors
+#define YELLOWCHANCE 20
+#define REDCHANCE 20
 
 enum Color {
     RED,
