@@ -70,9 +70,9 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
     assert(bottomLeftY < topRightY);
     bool split = false;     // Whether region will be split up
     int splitX, splitY;     // Coordinates of point where region will be split up
-    int randomInt = 0;
+    int randomInt = 0;      // Stores rand() return value
 
-    // Draw black outline, 2 pixels thick, of this region. Do not draw if called on entire canvas
+    // Draw black outline of this region. Do not draw if called on entire canvas
     if(!first) {
         colorRegion(bottomLeftX, topRightY - (int)ceil(LINEWIDTH / 2), topRightX, topRightY, BLACK);       // Top line
         colorRegion(topRightX - (int)ceil(LINEWIDTH / 2), bottomLeftY, topRightX, topRightY, BLACK);       // Right line
@@ -92,6 +92,7 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
     // Else randomly decide
     else {
         // Generate random number between 0 to 99, if less than region area divided by canvas area, split
+        // This logic results in larger regions being more likely to be split up
         randomInt = rand() % 100;
         split = randomInt < (((topRightX - bottomLeftX) * (topRightY - bottomLeftY) * 100) / (CANVASHEIGHT * CANVASWIDTH));
     }
@@ -104,16 +105,33 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
         randomInt = rand() % (int)floor((topRightY - bottomLeftY) / 2);
         splitY = bottomLeftY + randomInt + (int)(0.25 * (topRightY - bottomLeftY));
 
-        // Recursively call function on each of the four regions
-        splitOrColor(splitX, splitY, topRightX, topRightY, false);         // Top Right Region
-        splitOrColor(bottomLeftX, splitY, splitX, topRightY, false);       // Top Left Region
-        splitOrColor(bottomLeftX, bottomLeftY, splitX, splitY, false);     // Bottom Left Region
-        splitOrColor(splitX, bottomLeftY, topRightX, splitY, false);       // Bottom Right Region
+        // Decide whether to split horizontally, vertically, or in four
+        randomInt = rand() % 100;
+        // Split into four regions
+        if(randomInt < FOURCHANCE) {
+            // Recursively call function on each of the four regions
+            splitOrColor(splitX, splitY, topRightX, topRightY, false);         // Top Right Region
+            splitOrColor(bottomLeftX, splitY, splitX, topRightY, false);       // Top Left Region
+            splitOrColor(bottomLeftX, bottomLeftY, splitX, splitY, false);     // Bottom Left Region
+            splitOrColor(splitX, bottomLeftY, topRightX, splitY, false);       // Bottom Right Region
+        }
+        // Split into two regions
+        else {
+            // If wider than tall, split vertically
+            if((topRightX - bottomLeftX) > (topRightY - bottomLeftY)) {
+                splitOrColor(bottomLeftX, bottomLeftY, splitX, topRightY, false);   // Left Region
+                splitOrColor(splitX, bottomLeftY, topRightX, topRightY, false);     // Right Region
+            }
+            // If taller than wide, split horizontally
+            else {
+                splitOrColor(bottomLeftX, splitY, topRightX, topRightY, false);     // Top Region
+                splitOrColor(bottomLeftX, bottomLeftY, topRightX, splitY, false);   // Bottom Region
+            }
+        }        
     }
     else {
         Color chosenColor;
         randomInt = rand() % 100;
-        // Chances of each color
         chosenColor = (randomInt >= 0 && randomInt < REDCHANCE)                                                     ? RED :
                       (randomInt >= REDCHANCE && randomInt < REDCHANCE + YELLOWCHANCE)                              ? YELLOW :
                       (randomInt >= REDCHANCE + YELLOWCHANCE && randomInt < REDCHANCE + YELLOWCHANCE + BLUECHANCE)  ? BLUE :

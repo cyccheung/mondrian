@@ -1,8 +1,3 @@
-/*
-Image class contains the RGB values of each pixel
-This class contains function that takes top left corner, bottom right corner, and fill color
-*/
-
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 

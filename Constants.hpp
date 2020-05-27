@@ -9,10 +9,11 @@
 #define LOWERTHRESHOLD 30       // If region's shortest edge is shorter than this, always color region
 #define LINEWIDTH 5             // Must be odd
 #define NUMCHANNELS 4           // Blue, Green, Red, Alpha
-#define RANDOMSEED 6            // Change to get different image
+#define RANDOMSEED 9            // Change to get different image
 #define BLUECHANCE 20           // Percentage chances of colors
 #define YELLOWCHANCE 20
 #define REDCHANCE 20
+#define FOURCHANCE 20           // Percentage chance of splitting into four regions given split
 
 enum Color {
     RED,
