@@ -59,9 +59,12 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
     int splitX, splitY;     // Coordinates of point where region will be split up
     int randomInt = 0;
 
-    // TODO: Draw black outline, 2 pixels thick, of this region. Do not draw if 
+    // Draw black outline, 2 pixels thick, of this region. Do not draw if called on entire canvas
     if(!first) {
-        
+        colorRegion(bottomLeftX, topRightY - 1, topRightX, topRightY, BLACK);       // Top line
+        colorRegion(topRightX - 1, bottomLeftY, topRightX, topRightY, BLACK);       // Right line
+        colorRegion(bottomLeftX, bottomLeftY, topRightX, bottomLeftY + 1, BLACK);   // Bottom line
+        colorRegion(bottomLeftX, bottomLeftY, bottomLeftX + 1, topRightY, BLACK);   // Left line
     }
 
     // Decide if split or color
@@ -102,7 +105,7 @@ void Image::splitOrColor(int bottomLeftX, int bottomLeftY, int topRightX, int to
                       (randomInt >= 20 && randomInt < 40) ? YELLOW :
                       (randomInt >= 40 && randomInt < 60) ? BLUE :
                       WHITE;
-        colorRegion(bottomLeftX, bottomLeftY, topRightX, topRightY, chosenColor);
+        colorRegion(bottomLeftX + 2, bottomLeftY + 2, topRightX - 2, topRightY - 2, chosenColor);
     }
 }
 
