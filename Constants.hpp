@@ -3,13 +3,14 @@
 
 #include "stdint.h"
 
-#define CANVASWIDTH 800
-#define CANVASHEIGHT 800
-#define UPPERTHRESHOLD 400
-#define LOWERTHRESHOLD 50
+#define CANVASWIDTH 400
+#define CANVASHEIGHT 400
+#define UPPERTHRESHOLD 200
+#define LOWERTHRESHOLD 30
 #define BYTESPERPIXEL 3
 #define LINEWIDTH 3     // Must be odd
 #define NUMCHANNELS 4
+#define RANDOMSEED 3
 
 enum Color {
     RED,

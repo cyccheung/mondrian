@@ -9,6 +9,9 @@ This class contains function that takes top left corner, bottom right corner, an
 #include <fstream>
 #include <vector>
 #include <cstdlib>
+#include <cassert>
+#include <iostream>
+#include <cmath>
 #include "Constants.hpp"
 
 class Image {

@@ -3,7 +3,7 @@ SOURCES	= $(wildcard *.cpp)
 HEADERS = $(wildcard *.hpp)
 
 #------------- Changes below ---------------
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -g
 EXEC = mondrian.out
 #------------- Changes above ---------------
 all: $(EXEC) run
