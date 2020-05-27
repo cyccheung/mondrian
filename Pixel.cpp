@@ -3,7 +3,7 @@
 Pixel::Pixel() {
     x = 0;
     y = 0;
-    color = white;
+    color = WHITE;
 }
 
 void Pixel::setPixel(int xIn, int yIn, Color colorIn) {

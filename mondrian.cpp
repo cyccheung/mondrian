@@ -5,6 +5,7 @@
 
 int main() {
     Image mondrianImage;
-    mondrianImage.generateImage("file.bmp");
+    // mondrianImage.colorRegion(0, 0, CANVASWIDTH, CANVASHEIGHT, BLUE);
+    mondrianImage.generateBMP("file.bmp");
     return 0;
 }

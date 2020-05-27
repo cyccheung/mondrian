@@ -5,15 +5,18 @@
 
 #define CANVASWIDTH 800
 #define CANVASHEIGHT 800
+#define UPPERTHRESHOLD 400
+#define LOWERTHRESHOLD 50
 #define BYTESPERPIXEL 3
 #define LINEWIDTH 3     // Must be odd
+#define NUMCHANNELS 4
 
 enum Color {
-    red,
-    green,
-    blue,
-    black,
-    white
+    RED,
+    YELLOW,
+    BLUE,
+    BLACK,
+    WHITE
 };
 
 #pragma pack(push, 1)
